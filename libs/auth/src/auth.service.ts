@@ -49,7 +49,11 @@ export class AuthService {
       throw new BusinessException(ExceptionCode.AUTH_001);
     }
 
-    const credentialDto = CredentialDto.newInstance({ ...payload });
+    const credentialDto = CredentialDto.newInstance({
+      id: payload.id,
+      name: payload.name,
+      email: payload.email,
+    });
 
     const jwt = JwtBuilder.newInstance<CredentialDto>(credentialDto).builde();
     credentialDto.refreshToken = jwt.refreshToken;
@@ -63,6 +67,7 @@ export class AuthService {
     const payload = await lastValueFrom(
       JwtBuilder.decoded<CredentialDto>(token, JwtTokenType.Access),
     );
+
     let credentialDto: CredentialDto;
 
     if (payload) {

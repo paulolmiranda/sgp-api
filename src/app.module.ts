@@ -1,3 +1,4 @@
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
@@ -13,6 +14,7 @@ import { AppController } from './controllers/app.controller';
 import { UserController } from './controllers/user.controller';
 import { AuthController } from './controllers/auth.controller';
 import { ProjectController } from './controllers/project.controller';
+import { UserAccessController } from './controllers/user-access.controller';
 
 @Module({
   imports: [
@@ -22,12 +24,14 @@ import { ProjectController } from './controllers/project.controller';
     EmailModule,
     ProjectModule,
     TypeOrmModule.forRoot(ormOptions),
+    EventEmitterModule.forRoot({ global: true }),
   ],
   controllers: [
     AppController,
     AuthController,
     UserController,
     ProjectController,
+    UserAccessController,
   ],
   providers: [],
 })
