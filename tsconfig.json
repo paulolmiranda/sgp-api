@@ -16,6 +16,20 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/user": ["libs/user/src"],
+      "@app/user/*": ["libs/user/src/*"],
+      "@app/project": ["libs/project/src"],
+      "@app/project/*": ["libs/project/src/*"],
+      "@app/agile": ["libs/agile/src"],
+      "@app/agile/*": ["libs/agile/src/*"],
+      "@app/auth": ["libs/auth/src"],
+      "@app/auth/*": ["libs/auth/src/*"],
+      "@app/commons": ["libs/commons/src"],
+      "@app/commons/*": ["libs/commons/src/*"],
+      "@app/security": ["libs/security/src"],
+      "@app/security/*": ["libs/security/src/*"]
+    }
   }
 }
