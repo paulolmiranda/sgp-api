@@ -50,9 +50,11 @@ export class Project extends BaseEntity {
   })
   updateUser: User;
 
-  @OneToMany(() => Team, (team) => team.project)
+  @OneToMany(() => Team, (team) => team.project, { cascade: ['insert'] })
   teams: Team[];
 
-  @OneToMany(() => Swimlane, (swimlane) => swimlane.project)
+  @OneToMany(() => Swimlane, (swimlane) => swimlane.project, {
+    cascade: ['insert'],
+  })
   swimlanes: Swimlane[];
 }

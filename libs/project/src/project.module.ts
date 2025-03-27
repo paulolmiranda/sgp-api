@@ -5,10 +5,11 @@ import { Team } from './team.entity';
 import { Project } from './project.entity';
 import { Swimlane } from './swimlane.entity';
 import { ProjectService } from './project.service';
+import { ProjectRepository } from './project.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Project, Team, Swimlane])],
-  providers: [ProjectService],
+  providers: [ProjectService, ProjectRepository],
   exports: [ProjectService],
 })
 export class ProjectModule {}

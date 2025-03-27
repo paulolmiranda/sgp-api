@@ -78,7 +78,6 @@ export class UserService {
 
     const user = await this.userRepository.findOne({
       where: { activationCode: activationDto.activationCode },
-      relations: ['userChurches'],
     });
 
     if (!user) {

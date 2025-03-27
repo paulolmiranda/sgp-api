@@ -1,5 +1,4 @@
 import { OnEvent } from '@nestjs/event-emitter';
-import { SentMessageInfo } from 'nodemailer';
 import { Injectable } from '@nestjs/common';
 
 import { UserCreatedDto, UserRecoveredDto } from '@app/user';
@@ -15,17 +14,13 @@ export class UserEmailListener {
   }
 
   @OnEvent('user.invite')
-  public handleUserInviteEvent(
-    event: UserCreatedDto,
-  ): Promise<SentMessageInfo> {
+  public handleUserInviteEvent(event: UserCreatedDto): Promise<void> {
     console.log('user.invite', event);
     return null;
   }
 
   @OnEvent('user.recovery')
-  public handleUserRecoveryEvent(
-    event: UserRecoveredDto,
-  ): Promise<SentMessageInfo> {
+  public handleUserRecoveryEvent(event: UserRecoveredDto): Promise<void> {
     console.log('user.recovery', event);
     return null;
   }

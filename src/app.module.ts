@@ -12,6 +12,7 @@ import { EmailModule } from './email/email.module';
 import { AppController } from './controllers/app.controller';
 import { UserController } from './controllers/user.controller';
 import { AuthController } from './controllers/auth.controller';
+import { ProjectController } from './controllers/project.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,12 @@ import { AuthController } from './controllers/auth.controller';
     ProjectModule,
     TypeOrmModule.forRoot(ormOptions),
   ],
-  controllers: [AppController, AuthController, UserController],
+  controllers: [
+    AppController,
+    AuthController,
+    UserController,
+    ProjectController,
+  ],
   providers: [],
 })
 export class AppModule {}

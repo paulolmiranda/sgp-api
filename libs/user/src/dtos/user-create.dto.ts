@@ -1,11 +1,4 @@
-import {
-  IsUUID,
-  IsEmail,
-  IsString,
-  MaxLength,
-  IsNotEmpty,
-  IsOptional,
-} from 'class-validator';
+import { IsEmail, IsString, MaxLength, IsNotEmpty } from 'class-validator';
 import { Dto } from '@app/commons';
 
 export class UserCreateDto extends Dto {
@@ -18,15 +11,4 @@ export class UserCreateDto extends Dto {
   @IsNotEmpty()
   @MaxLength(30)
   public email: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  public churchId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public churchName: string;
-
-  @IsOptional()
-  public responsible: boolean;
 }
