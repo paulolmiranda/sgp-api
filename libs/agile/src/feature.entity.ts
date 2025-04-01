@@ -15,7 +15,7 @@ import { Project } from '@app/project';
 import { BaseEntity } from '@app/commons';
 
 import { Epic } from './epic.entity';
-import { Story } from './story.entity';
+import { Story } from './story/story.entity';
 
 @Entity('features')
 export class Feature extends BaseEntity {

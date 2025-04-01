@@ -14,10 +14,10 @@ import { User } from '@app/user';
 import { Project } from '@app/project';
 import { BaseEntity } from '@app/commons';
 
-import { Epic } from './epic.entity';
-import { Feature } from './feature.entity';
-import { StoryTask } from './story-task.entity';
-import { StoryNote } from './story-note.entity';
+import { Epic } from '../epic.entity';
+import { Feature } from '../feature.entity';
+import { StoryTask } from '../story-task.entity';
+import { StoryNote } from '../story-note.entity';
 
 @Entity('storys')
 export class Story extends BaseEntity {

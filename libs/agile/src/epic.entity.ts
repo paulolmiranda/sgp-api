@@ -14,7 +14,7 @@ import { User } from '@app/user';
 import { Project } from '@app/project';
 import { BaseEntity } from '@app/commons';
 
-import { Story } from './story.entity';
+import { Story } from './story/story.entity';
 import { Feature } from './feature.entity';
 
 @Entity('epics')

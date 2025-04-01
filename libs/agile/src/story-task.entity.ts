@@ -12,7 +12,7 @@ import {
 import { User } from '@app/user';
 import { BaseEntity } from '@app/commons';
 
-import { Story } from './story.entity';
+import { Story } from './story/story.entity';
 
 @Entity('storys_tasks')
 export class StoryTask extends BaseEntity {
