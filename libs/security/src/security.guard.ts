@@ -3,8 +3,7 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+  UnauthorizedException} from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 
 import { SecurityAuthProvider, Credential } from './security.provider';
@@ -17,6 +16,7 @@ export class SecurityGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
     const { headers } = context.switchToHttp().getRequest();
     const { authorization = '' } = headers;
 
@@ -34,7 +34,9 @@ export class SecurityGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    context.switchToHttp().getRequest().credential = credential;
+    request.user = credential;
+    request.credential = credential;
+
     return true;
   }
 }

@@ -60,6 +60,8 @@ export class AuthService {
     credentialDto.accessToken = jwt.accessToken;
     credentialDto.expiresIn = jwt.expiresIn;
 
+    
+
     return credentialDto;
   }
 

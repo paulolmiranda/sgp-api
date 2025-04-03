@@ -15,6 +15,7 @@ import { UserController } from './controllers/user.controller';
 import { AuthController } from './controllers/auth.controller';
 import { ProjectController } from './controllers/project.controller';
 import { UserAccessController } from './controllers/user-access.controller';
+import { EpicModule } from '@app/agile';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UserAccessController } from './controllers/user-access.controller';
     ProjectModule,
     TypeOrmModule.forRoot(ormOptions),
     EventEmitterModule.forRoot({ global: true }),
+    EpicModule
   ],
   controllers: [
     AppController,

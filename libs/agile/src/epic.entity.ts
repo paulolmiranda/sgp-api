@@ -10,7 +10,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { User } from '@app/user';
+import { User } from '@app/user'; 
 import { Project } from '@app/project';
 import { BaseEntity } from '@app/commons';
 
@@ -19,6 +19,7 @@ import { Feature } from './feature.entity';
 
 @Entity('epics')
 export class Epic extends BaseEntity {
+ 
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

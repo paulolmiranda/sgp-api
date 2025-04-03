@@ -6,7 +6,7 @@ import { UserActivationDto, UserRecoveryDto, UserService } from '@app/user';
 export class UserAccessController {
   constructor(private readonly userService: UserService) {}
 
-  @Put('/activation')
+  @Put('/activation') 
   public activate(@Body() activationDto: UserActivationDto): Promise<void> {
     return this.userService.activate(activationDto);
   }

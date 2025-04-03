@@ -16,6 +16,8 @@ export class CredentialDto extends Dto implements Credential {
 
   public refreshToken: string;
 
+  public user: any;
+
   @Expose()
   public get valid(): boolean {
     return !!this.id;

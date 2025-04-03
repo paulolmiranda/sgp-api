@@ -10,6 +10,6 @@ import { ProjectRepository } from './project.repository';
 @Module({
   imports: [TypeOrmModule.forFeature([Project, Team, Swimlane])],
   providers: [ProjectService, ProjectRepository],
-  exports: [ProjectService],
+  exports: [ProjectService, TypeOrmModule],
 })
 export class ProjectModule {}
