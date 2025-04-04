@@ -15,7 +15,7 @@ export class UserActivationDto extends Dto {
   @MaxLength(20)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'password too weak',
-  })
+  })  
   public password: string;
 
   @IsString()

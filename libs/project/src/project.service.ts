@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from '@app/user';
 import { DefaultResponse, validate } from '@app/commons';
@@ -8,10 +8,11 @@ import { Project } from './project.entity';
 import { Swimlane } from './swimlane.entity';
 import { ProjectRepository } from './project.repository';
 import { ProjectCreateDto } from './dtos/project-create.dto';
+import { ProjectUpdateDto } from './dtos/project-update.dto';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly projectRepository: ProjectRepository) {}
+  constructor(private readonly projectRepository: ProjectRepository) { }
 
   public async create(
     projectDto: ProjectCreateDto,
@@ -80,9 +81,51 @@ export class ProjectService {
     };
   }
 
-  public async getById(id: string): Promise<Project> {
-    return this.projectRepository.findOne({
+
+
+  async getById(id: string): Promise<Project> {
+    const project = await this.projectRepository.findOne({
       where: { id },
+      relations: ['createdUser', 'teams', 'swimlanes'],
     });
+    return project;
+  }
+
+  async updateProject(id: string, updateProjectDto: ProjectUpdateDto, userId: string) {
+    // Busca o projeto pelo ID incluindo o relacionamento createdUser
+    const project = await this.projectRepository.findOne({
+      where: { id },
+      relations: ['createdUser'],
+    });
+    // Comparar o ID do usuário autenticado com o ID do criador do projeto
+    if (project.createdUser.id !== userId)
+
+      Object.assign(project, updateProjectDto);// Se passar na validação, atualiza o projeto
+    return this.projectRepository.save(project);
+  }
+
+
+
+  async listProjects(userId: string): Promise<Project[]> {
+    console.log('Filtrando projetos para o usuário:', userId);
+    // Busca os projetos onde o usuário autenticado é o criador
+    const projects = await this.projectRepository.find({
+      where: { createdUser: { id: userId } },
+      relations: ['createdUser'],
+    });
+    return projects;
+  }
+
+
+  //softdelete
+  async deleteProject(id: string, userId: string): Promise<any> {
+    // Busca o projeto pelo ID incluindo o relacionamento 'createdUser'
+    const project = await this.projectRepository.findOne({
+      where: { id },
+      relations: ['createdUser'],
+    });
+    // Verifica se o usuário autenticado é o criador do projeto
+    if (project.createdUser.id !== userId)
+      await this.projectRepository.softDelete(id);
   }
 }
