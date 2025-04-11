@@ -1,5 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthDto, AuthService, CredentialDto } from '@app/auth';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -10,8 +17,16 @@ export class AuthController {
     return this.authService.login(authDto);
   }
 
-  @Get('/refresh')
-  public refresh(@Query('token') token: string): Promise<CredentialDto> {
+  @Post('/refresh')
+  public refresh(@Req() req: Request): Promise<CredentialDto> {
+    const authHeader = req.headers['authorization'];
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Token não fornecido ou malformado.');
+    }
+
+    const token = authHeader.replace('Bearer ', '').trim();
+
     return this.authService.refresh(token);
   }
 }

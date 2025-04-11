@@ -24,6 +24,7 @@ export class ExceptionFilter extends BaseExceptionFilter<Error> {
   }
 
   catch(exception: Error, host: ArgumentsHost) {
+    console.log(exception);
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
 

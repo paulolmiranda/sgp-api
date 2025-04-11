@@ -28,12 +28,23 @@ export class JwtBuilder<T> {
     tokenType: JwtTokenType,
   ): Observable<T> {
     return new Observable<any>((subscriber: Subscriber<T>) => {
-      verify(token, JwtBuilder.secret, (_: unknown, decoded: any) => {
-        const { type } = decoded || {};
-        const payload = type === tokenType && decoded;
-        subscriber.next(payload as T);
-        subscriber.complete();
-      });
+      try {
+        verify(token, JwtBuilder.secret, (err: any, decoded: any) => {
+          if (err) {
+            subscriber.error(err); // Token inválido, expirado, ou com chave errada
+          } else {
+            const { type } = decoded || {};
+            if (type !== tokenType) {
+              subscriber.error(new Error('Tipo de token inválido'));
+            } else {
+              subscriber.next(decoded as T);
+              subscriber.complete();
+            }
+          }
+        });
+      } catch (err) {
+        subscriber.error(err); // Fallback para erros fora do verify
+      }
     });
   }
 
@@ -69,6 +80,6 @@ export class JwtBuilder<T> {
   }
 
   public static get expiresIn(): number {
-    return +process.env.JWT_EXPIRY || 3600;
+    return +process.env.JWT_EXPIRY || 3600; // Padrão de 1 hora
   }
 }
