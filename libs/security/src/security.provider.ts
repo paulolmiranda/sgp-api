@@ -1,8 +1,9 @@
+import { User } from '@app/user';
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 export interface Credential {
-  user: any;
+  user: User;
   valid: boolean;
 }
 
