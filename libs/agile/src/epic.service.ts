@@ -14,29 +14,32 @@ import { Project } from '@app/project';
 import { Feature } from './feature.entity';
 import { Story } from './story.entity';
 
+
 @Injectable()
 export class EpicService {
   constructor(
-    @InjectRepository(EpicRepository)
-    private readonly epicRepository: EpicRepository, // Usando o EpicRepository customizado
+    private readonly epicRepository: EpicRepository,
 
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
   ) {}
 
+  async findByUser(userId: string): Promise<Epic[]> {
+    return this.epicRepository.findByUser(userId);
+  }
 
-/// Método para criar um épico
-  async create(createEpicDto: CreateEpicDto, user: User): Promise<Epic> {
+  async create(createEpicDto: CreateEpicDto, userId: string): Promise<Epic> {
     const project = await this.projectRepository.findOne({
       where: { id: createEpicDto.projectId },
     });
+
     if (!project) {
       throw new NotFoundException('Projeto não encontrado');
     }
-// Verifica se o usuário tem permissão para criar um épico nesse projeto
+
     const epic = this.epicRepository.create({
       ...createEpicDto,
-      createdUser: user,
+      createdUser: { id: userId } as User, // Referência apenas pelo ID
       project,
     });
 
@@ -48,28 +51,29 @@ export class EpicService {
     }
   }
 
-  async findAll(user: User): Promise<Epic[]> {
-    // Utiliza o método customizado que filtra épicos pelo usuário
-    return this.epicRepository.findEpicsByUser(user.id);
+  async findAll(userId: string): Promise<Epic[]> {
+    return this.epicRepository.findByUser(userId);
   }
-// Método para encontrar um épico específico
-  async findOne(id: string, user: User): Promise<Epic> {
+
+  async findOne(id: string, userId: string): Promise<Epic> {
     const epic = await this.epicRepository.findOne({
-      where: { id, createdUser: { id: user.id } },
+      where: { id, createdUser: { id: userId } },
       relations: ['project', 'createdUser', 'updateUser', 'features', 'stories'],
     });
+
     if (!epic) {
       throw new NotFoundException(
         'Épico não encontrado ou você não tem permissão para visualizá-lo',
       );
     }
+
     return epic;
   }
 
-  async update(id: string, updateEpicDto: UpdateEpicDto, user: User): Promise<Epic> {
-    const epic = await this.findOne(id, user);
+  async update(id: string, updateEpicDto: UpdateEpicDto, userId: string): Promise<Epic> {
+    const epic = await this.findOne(id, userId);
     Object.assign(epic, updateEpicDto);
-    epic.updateUser = user;
+    epic.updateUser = { id: userId } as User;
 
     try {
       return await this.epicRepository.save(epic);
@@ -79,29 +83,37 @@ export class EpicService {
     }
   }
 
-  async remove(id: string, user: User): Promise<void> {
-    const epic = await this.findOne(id, user);
+  async remove(id: string, userId: string): Promise<void> {
+    const epic = await this.findOne(id, userId);
 
-    // Atualiza as Features associadas, definindo a associação com o épico como null
     await this.epicRepository.manager
       .createQueryBuilder()
       .update(Feature)
       .set({ epic: null })
-      .where("epic_id = :id", { id: epic.id })
+      .where('epic_id = :id', { id: epic.id })
       .execute();
 
-    // Atualiza as Stories associadas
     await this.epicRepository.manager
       .createQueryBuilder()
       .update(Story)
       .set({ epic: null })
-      .where("epic_id = :id", { id: epic.id })
+      .where('epic_id = :id', { id: epic.id })
       .execute();
 
     await this.epicRepository.softDelete(id);
   }
 
   async findByProject(projectId: string): Promise<Epic[]> {
-    return this.epicRepository.findEpicsByProject(projectId);
+    return this.epicRepository.findByProject(projectId);
   }
-}
+
+  async delete(id: string, userId: string): Promise<void> {
+    const epic = await  this.epicRepository.findOne({ where: { id, createdUser: { id: userId } } });
+  
+    if (!epic) {
+      throw new NotFoundException('Epic not found');
+    }
+  
+    await  this.epicRepository.remove(epic);
+  }
+}  
