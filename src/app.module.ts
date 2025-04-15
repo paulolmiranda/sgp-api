@@ -15,6 +15,7 @@ import { UserController } from './controllers/user.controller';
 import { AuthController } from './controllers/auth.controller';
 import { ProjectController } from './controllers/project.controller';
 import { UserAccessController } from './controllers/user-access.controller';
+import { StoryController } from './controllers/story.controller';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UserAccessController } from './controllers/user-access.controller';
     AppController,
     AuthController,
     UserController,
+    StoryController,
     ProjectController,
     UserAccessController,
   ],

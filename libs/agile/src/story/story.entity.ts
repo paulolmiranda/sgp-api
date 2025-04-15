@@ -30,10 +30,10 @@ export class Story extends BaseEntity {
   @Column({ type: 'varchar', length: 2000 })
   description: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ name: 'start_at', type: 'timestamp' })
   startAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ name: 'end_at', type: 'timestamp', nullable: true })
   endAt: Date;
 
   @CreateDateColumn({

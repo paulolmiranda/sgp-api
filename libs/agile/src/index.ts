@@ -1,7 +1,8 @@
 export * from './agile.module';
 
 export * from './story/story.service';
-export * from './story/dto/story.dto';
+export * from './story.dto/story.dto';
+export * from './story.dto/story-update.dto';
 
 export * from './feature.entity';
 export * from './epic.entity';
