@@ -83,4 +83,20 @@ export class ProjectService {
   public getById(id: string): Promise<Project | null> {
     return this.projectRepository.findOne({ where: { id } });
   }
+
+  public async isOwner(id: string, userId: string): Promise<boolean> {
+    const count = await this.projectRepository.count({
+      where: { id, createdUser: { id: userId } },
+    });
+
+    return count !== 0;
+  }
+
+  public async isMember(id: string, userId: string): Promise<boolean> {
+    const count = await this.projectRepository.count({
+      where: { id, teams: { user: { id: userId } } },
+    });
+
+    return count !== 0;
+  }
 }
