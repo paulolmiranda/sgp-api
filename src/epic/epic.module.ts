@@ -14,6 +14,6 @@ import { ProjectModule } from 'src/project/project.module';
   ],
   providers: [EpicService, EpicRepository],
   controllers: [EpicController],
-  exports: [EpicService],
+  exports: [EpicService, EpicRepository],
 })
 export class EpicModule {}
