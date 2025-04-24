@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {  DefaultResponse } from 'src/commons/default-response';
-import { validate } from 'class-validator';
+import { validate, DefaultResponse } from 'src/commons/base-entity';
 import { Epic } from './epic.entity';
 import { CreateEpicDto } from './dtos/create-epic.dto';
 import { UpdateEpicDto } from './dtos/update-epic.dto';
@@ -18,7 +17,6 @@ export class EpicService {
 
   public async create(dto: CreateEpicDto, userId: string): Promise<DefaultResponse> {
     await validate(dto);
-
     const project = await this.projectService.getById(dto.projectId);
     if (!project) throw new NotFoundException('Projeto não encontrado');
 
@@ -39,12 +37,10 @@ export class EpicService {
     userId: string,
   ): Promise<DefaultResponse> {
     await validate(dto);
-
     const epic = await this.epicRepository.findOne({
       where: { id },
       relations: ['project', 'createdUser', 'project.createdUser'],
     });
-
     if (
       !epic ||
       (epic.project.createdUser.id !== userId && epic.createdUser.id !== userId)
@@ -76,14 +72,12 @@ export class EpicService {
       where: { id },
       relations: ['project', 'createdUser', 'project.createdUser'],
     });
-
     if (
       !epic ||
       (epic.project.createdUser.id !== userId && epic.createdUser.id !== userId)
     ) {
       throw new NotFoundException('Épico não encontrado ou não autorizado');
     }
-
     await this.epicRepository.remove(epic);
   }
 }

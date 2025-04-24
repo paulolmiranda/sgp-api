@@ -1,9 +1,11 @@
-import { IsNotEmpty, IsUUID, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsUUID, IsString, Length } from 'class-validator';
 
 export class CreateEpicDto {
   @IsNotEmpty({ message: 'A descrição é obrigatória' })
   @IsString()
-  @MaxLength(2000)
+  @Length(10, 2000, {
+    message: 'A descrição deve ter entre 10 e 2000 caracteres',
+  })
   description: string;
 
   @IsUUID()

@@ -20,4 +20,3 @@ export class EpicRepository extends Repository<Epic> {
     });
   }
 }
-
