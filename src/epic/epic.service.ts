@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { validate, DefaultResponse } from 'src/commons/base-entity';
+import { DefaultResponse } from 'src/commons/default-response';
+import { validate } from 'class-validator';
 import { Epic } from './epic.entity';
 import { CreateEpicDto } from './dtos/create-epic.dto';
 import { UpdateEpicDto } from './dtos/update-epic.dto';
