@@ -1,4 +1,4 @@
-import { Dto } from '@app/commons';
+import { Dto } from '../../commons/dto';
 import {
   IsArray,
   IsNotEmpty,

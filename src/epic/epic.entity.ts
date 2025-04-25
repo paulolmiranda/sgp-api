@@ -10,20 +10,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-<<<<<<< HEAD:libs/agile/src/epic.entity.ts
-import { User } from '@app/user';
-import { Project } from '@app/project';
-import { BaseEntity } from '@app/commons';
-
-import { Story } from './story/story.entity';
-import { Feature } from './feature.entity';
-=======
 import { User } from 'src/user/user.entity';
 import { Story } from 'src/story/story.entity';
 import { BaseEntity } from 'src/commons/base-entity';
 import { Project } from 'src/project/project.entity';
 import { Feature } from 'src/feature/feature.entity';
->>>>>>> main:src/epic/epic.entity.ts
 
 @Entity('epics')
 export class Epic extends BaseEntity {

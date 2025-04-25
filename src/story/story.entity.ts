@@ -1,25 +1,15 @@
 import {
-  Entity,
   Column,
+  Entity,
   ManyToOne,
   OneToMany,
   JoinColumn,
-  DeleteDateColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-<<<<<<<< HEAD:libs/agile/src/story/story.entity.ts
-import { User } from '@app/user';
-import { Project } from '@app/project';
-import { BaseEntity } from '@app/commons';
-
-import { Epic } from '../epic.entity';
-import { Feature } from '../feature.entity';
-import { StoryTask } from '../story-task.entity';
-import { StoryNote } from '../story-note.entity';
-========
 import { Epic } from 'src/epic/epic.entity';
 import { User } from 'src/user/user.entity';
 import { BaseEntity } from 'src/commons/base-entity';
@@ -27,7 +17,6 @@ import { Project } from 'src/project/project.entity';
 import { Feature } from 'src/feature/feature.entity';
 import { StoryTask } from 'src/story-task/story-task.entity';
 import { StoryNote } from 'src/story-note/story-note.entity';
->>>>>>>> main:src/story/story.entity.ts
 
 @Entity('storys')
 export class Story extends BaseEntity {

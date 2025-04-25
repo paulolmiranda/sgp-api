@@ -9,16 +9,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-<<<<<<< HEAD:libs/agile/src/story-note.entity.ts
-import { User } from '@app/user';
-import { BaseEntity } from '@app/commons';
-
-import { Story } from './story/story.entity';
-=======
 import { User } from 'src/user/user.entity';
 import { Story } from 'src/story/story.entity';
 import { BaseEntity } from 'src/commons/base-entity';
->>>>>>> main:src/story-note/story-note.entity.ts
 
 @Entity('storys_notes')
 export class StoryNote extends BaseEntity {
