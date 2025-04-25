@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "87f354f8-a76d-495c-ae31-aa60203aa4fb",
+		"name": "SGP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37668930"
+	},
+	"item": [
+		{
+			"name": "User  - create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Paulo Leoanrdo de O. Miranda\",\r\n    \"email\": \"paulolmiranda23@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/users",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User - activation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activationCode\": \"711200408cda4682a05e1e30f6c6b1de\",\r\n    \"password\": \"FGV@sgp2025\",\r\n    \"passwordConfirm\": \"FGV@sgp2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/users-access/activation",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"users-access",
+						"activation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paulolmiranda23@gmail.com\",\r\n    \"password\": \"FGV@sgp2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/auth/login",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - refresh",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paulolmiranda23@gmail.com\",\r\n    \"password\": \"FGV@sgp2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/auth/refresh?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5MzkxOGFhLTFiMGUtNDkwOC05MzAyLWZiOGU1OTA5ZGM2NiIsIm5hbWUiOiJQYXVsbyBMZW9hbnJkbyBkZSBPLiBNaXJhbmRhIiwiZW1haWwiOiJwYXVsb2xtaXJhbmRhMjNAZ21haWwuY29tIiwidHlwZSI6MSwiZXhwIjoxNzQzMTE1Nzg5LCJpYXQiOjE3NDMxMTM5ODl9.up5WdlAq2Mxpl31EYqueHulSNJQY78HVQoNVb5r29AI",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"auth",
+						"refresh"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5MzkxOGFhLTFiMGUtNDkwOC05MzAyLWZiOGU1OTA5ZGM2NiIsIm5hbWUiOiJQYXVsbyBMZW9hbnJkbyBkZSBPLiBNaXJhbmRhIiwiZW1haWwiOiJwYXVsb2xtaXJhbmRhMjNAZ21haWwuY29tIiwidHlwZSI6MSwiZXhwIjoxNzQzMTE1Nzg5LCJpYXQiOjE3NDMxMTM5ODl9.up5WdlAq2Mxpl31EYqueHulSNJQY78HVQoNVb5r29AI"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project - create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ5MzkxOGFhLTFiMGUtNDkwOC05MzAyLWZiOGU1OTA5ZGM2NiIsIm5hbWUiOiJQYXVsbyBMZW9hbnJkbyBkZSBPLiBNaXJhbmRhIiwiZW1haWwiOiJwYXVsb2xtaXJhbmRhMjNAZ21haWwuY29tIiwidHlwZSI6MCwiZXhwIjoxNzQzMTE1NjQ1LCJpYXQiOjE3NDMxMTQ3NDV9.0qJwtHmpv35siVLFgi-S_Fvr78U8YduLJ96hl-aCeFI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Projeto SGP\",\r\n    \"description\": \"Batatinha quando nasce...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/projects",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project - get by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paulolmiranda23@gmail.com\",\r\n    \"password\": \"FGV@sgp2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/projects/9caba0a3-cf98-427b-9de4-9a345bc1e779",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"projects",
+						"9caba0a3-cf98-427b-9de4-9a345bc1e779"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

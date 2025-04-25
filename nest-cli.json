@@ -3,63 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true
-  },
-  "projects": {
-    "user": {
-      "type": "library",
-      "root": "libs/user",
-      "entryFile": "index",
-      "sourceRoot": "libs/user/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/user/tsconfig.lib.json"
-      }
-    },
-    "project": {
-      "type": "library",
-      "root": "libs/project",
-      "entryFile": "index",
-      "sourceRoot": "libs/project/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/project/tsconfig.lib.json"
-      }
-    },
-    "agile": {
-      "type": "library",
-      "root": "libs/agile",
-      "entryFile": "index",
-      "sourceRoot": "libs/agile/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/agile/tsconfig.lib.json"
-      }
-    },
-    "auth": {
-      "type": "library",
-      "root": "libs/auth",
-      "entryFile": "index",
-      "sourceRoot": "libs/auth/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/auth/tsconfig.lib.json"
-      }
-    },
-    "commons": {
-      "type": "library",
-      "root": "libs/commons",
-      "entryFile": "index",
-      "sourceRoot": "libs/commons/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/commons/tsconfig.lib.json"
-      }
-    },
-    "security": {
-      "type": "library",
-      "root": "libs/security",
-      "entryFile": "index",
-      "sourceRoot": "libs/security/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/security/tsconfig.lib.json"
-      }
-    }
+    "deleteOutDir": true
   }
 }

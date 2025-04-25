@@ -1,7 +1,8 @@
 import { OnEvent } from '@nestjs/event-emitter';
 import { Injectable } from '@nestjs/common';
 
-import { UserCreatedDto, UserRecoveredDto } from '@app/user';
+import { UserCreatedDto } from 'src/user/dtos/user-created.dto';
+import { UserRecoveredDto } from 'src/user/dtos/user-recovered.dto';
 
 @Injectable()
 export class UserEmailListener {
@@ -10,18 +11,18 @@ export class UserEmailListener {
   @OnEvent('user.activate')
   public handleUserActivateEvent(event: UserCreatedDto): Promise<void> {
     console.log('user.activate', event);
-    return null;
+    return Promise.resolve();
   }
 
   @OnEvent('user.invite')
   public handleUserInviteEvent(event: UserCreatedDto): Promise<void> {
     console.log('user.invite', event);
-    return null;
+    return Promise.resolve();
   }
 
   @OnEvent('user.recovery')
   public handleUserRecoveryEvent(event: UserRecoveredDto): Promise<void> {
     console.log('user.recovery', event);
-    return null;
+    return Promise.resolve();
   }
 }
