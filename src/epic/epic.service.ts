@@ -1,13 +1,12 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
+
+import { Epic } from './epic.entity';
+import { CreateEpicDto } from './dtos/create-epic.dto';
+import { UpdateEpicDto } from './dtos/update-epic.dto';
+import { EpicDto } from './dtos/epic.dto';
 import { DefaultResponse } from 'src/commons/default-response';
-
-import { Epic }           from './epic.entity';
-import { CreateEpicDto }  from './dtos/create-epic.dto';
-import { UpdateEpicDto }  from './dtos/update-epic.dto';
-import { EpicDto }        from './dtos/epic.dto';
-
-import { User }           from 'src/user/user.entity';
+import { User } from 'src/user/user.entity';
 import { EpicRepository } from './epic.repository';
 import { ProjectService } from 'src/project/project.service';
 
@@ -21,7 +20,7 @@ export class EpicService {
   public async create(dto: CreateEpicDto, userId: string): Promise<DefaultResponse> {
     await validate(dto);
     const project = await this.projectSvc.getById(dto.projectId);
-    if (!project) throw new HttpException('Projeto não encontrado', HttpStatus.NOT_FOUND);
+    if (!project) throw new NotFoundException('Registro não encontrado');
 
     const epic = Epic.newInstance({
       description: dto.description,
@@ -48,7 +47,7 @@ export class EpicService {
       !epic ||
       (epic.project.createdUser.id !== userId && epic.createdUser.id !== userId)
     ) {
-      throw new HttpException('Épico não encontrado ou não autorizado', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Registro não encontrado');
     }
 
     epic.description = dto.description;
@@ -66,7 +65,7 @@ export class EpicService {
 
   public async listByProject(projectId: string): Promise<EpicDto[]> {
     const project = await this.projectSvc.getById(projectId);
-    if (!project) throw new HttpException('Projeto não encontrado', HttpStatus.NOT_FOUND);
+    if (!project) throw new NotFoundException('Registro não encontrado');
 
     const epics = await this.epicRepo.findByProject(projectId);
     return epics.map(EpicDto.fromEntity);
@@ -81,9 +80,8 @@ export class EpicService {
       !epic ||
       (epic.project.createdUser.id !== userId && epic.createdUser.id !== userId)
     ) {
-      throw new HttpException('Épico não encontrado ou não autorizado', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Registro não encontrado');
     }
-
     await this.epicRepo.softRemove(epic);
   }
 }
