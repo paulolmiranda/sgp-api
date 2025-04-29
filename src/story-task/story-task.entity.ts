@@ -60,4 +60,5 @@ export class StoryTask extends BaseEntity {
     foreignKeyConstraintName: 'storys_tasks_03_fk',
   })
   updateUser: User;
+  task: { id: string };
 }

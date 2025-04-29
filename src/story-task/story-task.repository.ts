@@ -10,3 +10,4 @@ export class StoryTaskRepository extends BaseRepository<StoryTask> {
     super(StoryTask, dataSource.createEntityManager());
   }
 }
+//teste git
