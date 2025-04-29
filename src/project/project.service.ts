@@ -80,8 +80,12 @@ export class ProjectService {
     };
   }
 
+  //Alterado para que eu pudesse trazer o criador do projeto junto.
   public getById(id: string): Promise<Project | null> {
-    return this.projectRepository.findOne({ where: { id } });
+    return this.projectRepository.findOne({
+      where: { id },
+      relations: ['createdUser'],
+    });
   }
 
   public async isOwner(id: string, userId: string): Promise<boolean> {
