@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { Project } from './project.entity';
 import { User } from 'src/user/user.entity';
@@ -8,10 +13,11 @@ import { ProjectRepository } from './project.repository';
 import { ProjectCreateDto } from './dtos/project-create.dto';
 import { DefaultResponse } from 'src/commons/default-response';
 import { validate } from 'src/commons/exception/exception-commons';
+import { ProjectUpdateDto } from './dtos/project-update.dto';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly projectRepository: ProjectRepository) {}
+  constructor(private readonly projectRepository: ProjectRepository) { }
 
   public async create(
     projectDto: ProjectCreateDto,
@@ -80,10 +86,6 @@ export class ProjectService {
     };
   }
 
-  public getById(id: string): Promise<Project | null> {
-    return this.projectRepository.findOne({ where: { id } });
-  }
-
   public async isOwner(id: string, userId: string): Promise<boolean> {
     const count = await this.projectRepository.count({
       where: { id, createdUser: { id: userId } },
@@ -98,5 +100,60 @@ export class ProjectService {
     });
 
     return count !== 0;
+  }
+
+  public async update(projectDto: ProjectUpdateDto): Promise<Project> {
+    await validate(projectDto);
+
+    const project = await this.projectRepository.findOne({
+      where: { id: projectDto.id },
+    });
+
+    if (!project?.id) {
+      throw new NotFoundException('Registro não encontrado.');
+    }
+
+    project.title = projectDto.title;
+    project.description = projectDto.description;
+    project.updatedAt = new Date();
+    project.updateUser = User.newInstance({ id: projectDto.userId });
+
+    return this.projectRepository.save(project);
+  }
+
+  public async getAll(userId: string): Promise<Project[]> {
+    const projects = await this.projectRepository.find({
+      where: [
+        { createdUser: { id: userId } },
+        { teams: { user: { id: userId } } },
+      ],
+      relations: ['teams'],
+    });
+
+    return projects;
+  }
+
+  public async getById(id: string): Promise<Project> {
+    const project = await this.projectRepository.findOne({
+      where: { id },
+    });
+
+    if (!project?.id) {
+      throw new NotFoundException('Registro não encontrado.');
+    }
+    return project;
+  }
+
+  public async delete(id: string, userId: string): Promise<void> {
+    const project = await this.projectRepository.findOne({ where: { id } });
+
+    if (!project?.id) {
+      throw new NotFoundException('Registro não encontrado.');
+    }
+
+    await this.projectRepository.softRemove(project);
+
+    project.deletedAt = new Date();
+    await this.projectRepository.save(project);
   }
 }
