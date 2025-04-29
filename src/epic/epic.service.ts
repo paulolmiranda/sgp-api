@@ -17,7 +17,10 @@ export class EpicService {
     private readonly projectSvc: ProjectService,
   ) {}
 
-  public async create(dto: CreateEpicDto, userId: string): Promise<DefaultResponse> {
+  public async create(
+    dto: CreateEpicDto,
+    userId: string,
+  ): Promise<DefaultResponse> {
     await validate(dto);
     const project = await this.projectSvc.getById(dto.projectId);
     if (!project) throw new NotFoundException('Registro não encontrado');
@@ -51,8 +54,8 @@ export class EpicService {
     }
 
     epic.description = dto.description;
-    epic.updatedAt   = new Date();
-    epic.updateUser  = User.newInstance({ id: userId });
+    epic.updatedAt = new Date();
+    epic.updateUser = User.newInstance({ id: userId });
 
     const updated = await this.epicRepo.save(epic);
     return { id: updated.id };

@@ -8,12 +8,9 @@ import { EpicController } from './epic.controller';
 import { ProjectModule } from 'src/project/project.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Epic]),
-    ProjectModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Epic]), ProjectModule],
   providers: [EpicService, EpicRepository],
   controllers: [EpicController],
-  exports: [EpicService, EpicRepository],
+  exports: [EpicService],
 })
 export class EpicModule {}

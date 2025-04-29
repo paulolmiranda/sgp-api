@@ -1,14 +1,12 @@
 import { IsNotEmpty, IsUUID, IsString, Length } from 'class-validator';
 
 export class CreateEpicDto {
-  @IsNotEmpty({ message: 'A descrição é obrigatória' })
+  @IsNotEmpty()
   @IsString()
-  @Length(10, 2000, {
-    message: 'A descrição deve ter entre 10 e 2000 caracteres',
-  })
+  @Length(10, 2000)
   description: string;
 
   @IsUUID()
-  @IsNotEmpty({ message: 'O projectId é obrigatório' })
+  @IsNotEmpty()
   projectId: string;
 }
