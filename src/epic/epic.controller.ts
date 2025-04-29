@@ -21,7 +21,7 @@ import { DefaultResponse } from 'src/commons/default-response';
 import { CredentialDto } from 'src/auth/dtos/credential.dto';
 
 @Controller('epics')
-@UseGuards(SecurityGuard, ProjectTeamGuard)  // autentica e verifica time em todas as rotas
+@UseGuards(SecurityGuard, ProjectTeamGuard) 
 export class EpicController {
   constructor(private readonly epicSvc: EpicService) {}
 
@@ -43,9 +43,7 @@ export class EpicController {
   }
 
   @Get()
-  public list(
-    @InstanceCredential() cred: CredentialDto,
-  ): Promise<EpicDto[]> {
+  public list(@InstanceCredential() cred: CredentialDto): Promise<EpicDto[]> {
     return this.epicSvc.list(cred.id);
   }
 
