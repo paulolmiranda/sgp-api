@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Controller,
+  Patch,
 } from '@nestjs/common';
 
 import { Project } from './project.entity';
@@ -18,6 +19,7 @@ import { CredentialDto } from 'src/auth/dtos/credential.dto';
 import { DefaultResponse } from 'src/commons/default-response';
 import { InstanceCredential } from 'src/security/security.provider';
 import { ProjectTeamGuard } from './project-team.guard';
+import { ProjectUpdateDto } from './dtos/project-update.dto';
 
 @Controller('projects')
 export class ProjectController {
@@ -32,21 +34,39 @@ export class ProjectController {
     return this.projectService.create(projectDto, credencial.id);
   }
 
-  @Put(':projectId')
-  @UseGuards(SecurityGuard, ProjectGuard)
-  public update(@Param('projectId') id: string): Promise<DefaultResponse> {
-    return Promise.resolve({ id });
-  }
-
-  @Delete(':projectId')
-  @UseGuards(SecurityGuard, ProjectGuard)
-  public delete(@Param('projectId') id: string): Promise<DefaultResponse> {
-    return Promise.resolve({ id });
-  }
-
   @Get(':projectId')
   @UseGuards(SecurityGuard, ProjectTeamGuard)
   public getById(@Param('projectId') id: string): Promise<Project | null> {
     return this.projectService.getById(id);
   }
+  
+  @Get()
+  @UseGuards(SecurityGuard, ProjectTeamGuard )
+  public getAll(
+    @InstanceCredential<CredentialDto>() credencial: CredentialDto,
+  ): Promise<Project[]> {
+    return this.projectService.getAll(credencial.id);
+  }
+
+  @Patch(':projectId')
+  @UseGuards(SecurityGuard, ProjectGuard)
+  public update(
+    @Param('projectId') id: string,
+    @Body() projectDto: ProjectUpdateDto,
+    @InstanceCredential<CredentialDto>() credencial: CredentialDto,
+  ): Promise<DefaultResponse> {
+    projectDto.id = id;
+    projectDto.userId = credencial.id;
+    return this.projectService.update(projectDto);
+  }
+  
+  @Delete(':projectId')
+  @UseGuards(SecurityGuard, ProjectGuard)
+  public delete(
+    @Param('projectId') id: string,
+    @InstanceCredential<CredentialDto>() credential: CredentialDto,
+  ): Promise<void> {
+    return this.projectService.delete(id, credential.id);
+  }
 }
+
