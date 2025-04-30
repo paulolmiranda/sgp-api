@@ -49,14 +49,25 @@ export class StoryNoteService {
     return this.storyNoteRepository.save(storyNote);
   }
 
-  async delete(id: string): Promise<void> {
-    const result = await this.storyNoteRepository.delete(id);
-    if (result.affected === 0) {
+  async delete(id: string, user: User): Promise<void> {
+    const storyNote = await this.storyNoteRepository.findOne({
+      where: { id },
+      relations: ['createdUser'],
+    });
+    if (!storyNote) {
       throw new NotFoundException('Nota não encontrada');
     }
+    if (storyNote.createdUser.id !== user.id) {
+      throw new ForbiddenException(
+        'Você não tem permissão para excluir esta nota',
+      );
+    }
+    await this.storyNoteRepository.delete(id);
   }
 
   async findAll(): Promise<StoryNote[]> {
-    return this.storyNoteRepository.find();
+    return this.storyNoteRepository.find({
+      relations: ['createdUser'], 
+    });
   }
 }

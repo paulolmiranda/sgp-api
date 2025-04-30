@@ -42,8 +42,8 @@ export class StoryNoteController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.storyNoteService.delete(id);
+  delete(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
+    return this.storyNoteService.delete(id, req.user);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -17,17 +17,17 @@ import { Story } from './story.entity';
 @Entity('storys_notes')
 export class StoryNote extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string; //Localizar o que preciso na API
+  id: string; 
 
   @Column({ type: 'varchar', length: 2000 })
-  description: string; //comentário
+  description: string; 
 
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createdAt: Date; //data de criação
+  createdAt: Date; 
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', nullable: true })
   updatedAt: Date;
@@ -40,12 +40,12 @@ export class StoryNote extends BaseEntity {
     name: 'story_id',
     foreignKeyConstraintName: 'storys_notes_01_fk',
   })
-  story: Story; //Card
+  story: Story; 
 
   @ManyToOne(() => User)
   @JoinColumn({
     name: 'created_user_id',
     foreignKeyConstraintName: 'storys_notes_02_fk',
   })
-  createdUser: User; //único que pode fazer/alterar o comentário
+  createdUser: User; 
 }
