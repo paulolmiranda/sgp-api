@@ -20,8 +20,7 @@ import { EpicModule }    from 'src/epic/epic.module';
     FeatureController,
   ],
   exports: [
-    FeatureService,
-    FeatureRepository,                    
+    FeatureService                
   ],
 })
 export class FeatureModule {}
